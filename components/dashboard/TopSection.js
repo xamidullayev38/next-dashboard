@@ -1,51 +1,56 @@
 import { Grid, Paper, Typography, Box, Stack, Avatar } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart } from "@mui/x-charts/PieChart";
 
-const borderClr = "#EEF0F4";
-
-const cardSx = {
-  p: 3,
-  borderRadius: 2,
-  border: "1px solid",
-  borderColor: borderClr,
-  boxShadow: "none",
-  bgcolor: "#fff",
-  minHeight: "100%",
-};
-
-const statCardSx = {
-  p: 2.5,
-  borderRadius: 2, // 12px
-  border: "1px solid",
-  borderColor: borderClr,
-  boxShadow: "none",
-  width: "100%",
-  textAlign: "center",
-};
-
 export default function TopSection() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
+  const cardSx = {
+    p: 3,
+    borderRadius: 2,
+    border: "1px solid",
+    borderColor: "divider",
+    boxShadow: "none",
+    bgcolor: "background.paper",
+    minHeight: "100%",
+  };
+
+  const statCardSx = {
+    p: 2.5,
+    borderRadius: 2,
+    border: "1px solid",
+    borderColor: "divider",
+    boxShadow: "none",
+    width: "100%",
+    textAlign: "center",
+  };
+
+  // pastel backgroundlar (dark mode’da ham ko‘rinadi)
+  const statBg = {
+    peach: alpha("#F4B56A", isDark ? 0.18 : 0.28),
+    lavender: alpha("#6C63FF", isDark ? 0.18 : 0.14),
+    sky: alpha("#45D6E5", isDark ? 0.16 : 0.18),
+  };
+
   return (
     <Grid container spacing={3} mb={3}>
       {/* Teams Strength */}
       <Grid item xs={12} md={4}>
         <Paper sx={cardSx}>
-          <Typography sx={{ fontWeight: 700, fontSize: 16, mb: 2 }}>Teams Strength</Typography>
+          <Typography sx={{ fontWeight: 700, fontSize: 16, mb: 2, color: "text.primary" }}>
+            Teams Strength
+          </Typography>
 
           <Box sx={{ width: "100%", overflow: "hidden" }}>
             <BarChart
               xAxis={[{ scaleType: "band", data: ["a", "b", "c", "d"] }]}
-              series={[
-                {
-                  data: [1, 5, 3, 10],
-                  color: "#F4B56A",
-                },
-              ]}
+              series={[{ data: [1, 5, 3, 10], color: "#F4B56A" }]}
               height={190}
             />
           </Box>
 
-          {/* mini legend (Figma like) */}
           <Stack direction="row" spacing={2} mt={2} flexWrap="wrap" useFlexGap>
             {[
               { t: "Marketing", c: "#F4B56A" },
@@ -69,7 +74,7 @@ export default function TopSection() {
                 >
                   {x.t[0]}
                 </Box>
-                <Typography sx={{ fontSize: 13, color: "#6B7280" }}>{x.t}</Typography>
+                <Typography sx={{ fontSize: 13, color: "text.secondary" }}>{x.t}</Typography>
               </Stack>
             ))}
           </Stack>
@@ -80,18 +85,23 @@ export default function TopSection() {
       <Grid item xs={12} md={4}>
         <Paper sx={cardSx}>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-            <Typography sx={{ fontWeight: 700, fontSize: 16 }}>Employees</Typography>
-            <Typography sx={{ fontSize: 12, color: "#6B7280" }}>Aug 25 - Sept 25</Typography>
+            <Typography sx={{ fontWeight: 700, fontSize: 16, color: "text.primary" }}>
+              Employees
+            </Typography>
+            <Typography sx={{ fontSize: 12, color: "text.secondary" }}>Aug 25 - Sept 25</Typography>
           </Box>
 
-          <Box sx={{ width: "390px", position: "relative", display: "grid", placeItems: "center" }}>
+          <Box sx={{ width: "100%", position: "relative", display: "grid", placeItems: "center" }}>
             <PieChart
               series={[
-                // OUTER ring (Active)
                 {
                   data: [
-                    { id: 0, value: 78, color: "#F4B56A" }, // progress
-                    { id: 1, value: 22, color: "#F2F4F8" }, // remainder
+                    { id: 0, value: 78, color: "#F4B56A" },
+                    {
+                      id: 1,
+                      value: 22,
+                      color: alpha(theme.palette.text.primary, isDark ? 0.1 : 0.08),
+                    },
                   ],
                   innerRadius: 78,
                   outerRadius: 90,
@@ -100,12 +110,14 @@ export default function TopSection() {
                   paddingAngle: 0,
                   cornerRadius: 18,
                 },
-
-                // MIDDLE ring (Total - decorative)
                 {
                   data: [
                     { id: 0, value: 55, color: "#FF7A59" },
-                    { id: 1, value: 45, color: "#F2F4F8" },
+                    {
+                      id: 1,
+                      value: 45,
+                      color: alpha(theme.palette.text.primary, isDark ? 0.1 : 0.08),
+                    },
                   ],
                   innerRadius: 62,
                   outerRadius: 74,
@@ -114,12 +126,14 @@ export default function TopSection() {
                   paddingAngle: 0,
                   cornerRadius: 18,
                 },
-
-                // INNER ring (Inactive)
                 {
                   data: [
                     { id: 0, value: 18, color: "#6C63FF" },
-                    { id: 1, value: 82, color: "#F2F4F8" },
+                    {
+                      id: 1,
+                      value: 82,
+                      color: alpha(theme.palette.text.primary, isDark ? 0.1 : 0.08),
+                    },
                   ],
                   innerRadius: 46,
                   outerRadius: 58,
@@ -134,14 +148,13 @@ export default function TopSection() {
               slotProps={{ legend: { hidden: true } }}
             />
 
-            {/* Center avatar (rasmdagi kabi) */}
             <Box
               sx={{
                 position: "absolute",
                 width: 56,
                 height: 56,
                 borderRadius: "50%",
-                bgcolor: "#FFD7B0",
+                bgcolor: alpha("#F4B56A", isDark ? 0.35 : 0.35),
                 display: "grid",
                 placeItems: "center",
               }}
@@ -150,9 +163,11 @@ export default function TopSection() {
                 sx={{
                   width: 42,
                   height: 42,
-                  bgcolor: "#fff",
-                  color: "#111",
+                  bgcolor: "background.paper",
+                  color: "text.primary",
                   fontWeight: 800,
+                  border: "1px solid",
+                  borderColor: "divider",
                 }}
               >
                 A
@@ -167,16 +182,13 @@ export default function TopSection() {
               { label: "Total", val: "3254", dot: "#F4B56A" },
             ].map((it) => (
               <Box key={it.label} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Box
-                  sx={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    bgcolor: it.dot,
-                  }}
-                />
-                <Typography sx={{ fontSize: 13, color: "#6B7280", flex: 1 }}>{it.label}</Typography>
-                <Typography sx={{ fontWeight: 800, fontSize: 14 }}>{it.val}</Typography>
+                <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: it.dot }} />
+                <Typography sx={{ fontSize: 13, color: "text.secondary", flex: 1 }}>
+                  {it.label}
+                </Typography>
+                <Typography sx={{ fontWeight: 800, fontSize: 14, color: "text.primary" }}>
+                  {it.val}
+                </Typography>
               </Box>
             ))}
           </Stack>
@@ -186,26 +198,38 @@ export default function TopSection() {
       {/* Right stat cards */}
       <Grid item xs={12} md={4} sx={{ minWidth: 300 }}>
         <Stack spacing={2} sx={{ width: "100%" }}>
-          <Paper sx={{ ...statCardSx, bgcolor: "#FCEFE4" }}>
-            <Typography sx={{ fontWeight: 800, fontSize: 18 }}>Top 10</Typography>
-            <Typography sx={{ fontSize: 13, mt: 0.5 }}>Position In Dribbble</Typography>
-            <Typography sx={{ fontSize: 12, color: "#6B7280", mt: 0.5 }}>
+          <Paper sx={{ ...statCardSx, bgcolor: statBg.peach }}>
+            <Typography sx={{ fontWeight: 800, fontSize: 18, color: "text.primary" }}>
+              Top 10
+            </Typography>
+            <Typography sx={{ fontSize: 13, mt: 0.5, color: "text.primary" }}>
+              Position In Dribbble
+            </Typography>
+            <Typography sx={{ fontSize: 12, mt: 0.5, color: "text.secondary" }}>
               20% increase from last week
             </Typography>
           </Paper>
 
-          <Paper sx={{ ...statCardSx, bgcolor: "#EDEBFF" }}>
-            <Typography sx={{ fontWeight: 900, fontSize: 20 }}>26</Typography>
-            <Typography sx={{ fontSize: 13, mt: 0.5 }}>New Employees Onboarded</Typography>
-            <Typography sx={{ fontSize: 12, color: "#6B7280", mt: 0.5 }}>
+          <Paper sx={{ ...statCardSx, bgcolor: statBg.lavender }}>
+            <Typography sx={{ fontWeight: 900, fontSize: 20, color: "text.primary" }}>
+              26
+            </Typography>
+            <Typography sx={{ fontSize: 13, mt: 0.5, color: "text.primary" }}>
+              New Employees Onboarded
+            </Typography>
+            <Typography sx={{ fontSize: 12, mt: 0.5, color: "text.secondary" }}>
               15% increase from last month
             </Typography>
           </Paper>
 
-          <Paper sx={{ ...statCardSx, bgcolor: "#E8F6FF" }}>
-            <Typography sx={{ fontWeight: 900, fontSize: 20 }}>500</Typography>
-            <Typography sx={{ fontSize: 13, mt: 0.5 }}>New Clients Approached</Typography>
-            <Typography sx={{ fontSize: 12, color: "#6B7280", mt: 0.5 }}>
+          <Paper sx={{ ...statCardSx, bgcolor: statBg.sky }}>
+            <Typography sx={{ fontWeight: 900, fontSize: 20, color: "text.primary" }}>
+              500
+            </Typography>
+            <Typography sx={{ fontSize: 13, mt: 0.5, color: "text.primary" }}>
+              New Clients Approached
+            </Typography>
+            <Typography sx={{ fontSize: 12, mt: 0.5, color: "text.secondary" }}>
               5% increase from last week
             </Typography>
           </Paper>
