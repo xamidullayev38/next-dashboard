@@ -91,7 +91,7 @@ export default function TopSection() {
             <Typography sx={{ fontSize: 12, color: "text.secondary" }}>Aug 25 - Sept 25</Typography>
           </Box>
 
-          <Box sx={{ width: "100%", position: "relative", display: "grid", placeItems: "center" }}>
+          <Box sx={{ width: "390px", position: "relative", display: "grid", placeItems: "center" }}>
             <PieChart
               series={[
                 {
