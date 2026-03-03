@@ -14,7 +14,7 @@ export default function BottomSection() {
     <Grid container spacing={3} mt={0}>
       {/* Big chart */}
       <Grid item xs={12} md={8}>
-        <Paper sx={{ maxWidth: "850px", width: "100%", p: 3, borderRadius: 2 }}>
+        <Paper sx={{ width: "860px", p: 3, borderRadius: 2 }}>
           <Typography fontWeight={700} mb={2}>
             Project Deliveries
           </Typography>
